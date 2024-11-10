@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <link rel="shortcut icon" href="#" type="image/x-icon" />
+        <title>Selection Sort</title>
+    </head>
+    <body>
+        <div id="title">
+            <h3>Selection Sort</h3>
+        </div>
+
+        <div id="container">
+        </div>
+        
+        <div id="counter">Interations: <span id="interations"></span></div>
+
+        <form id="inputs" action="">
+            <label>
+                Select the length of the array Max 20:
+                <input type="number" id="length" name="arr_length" min="1" max="20" />
+            </label>
+            <label>
+                Tick Rate(ms):
+                <input type="number" id="tickRate" min="1" max="500" />
+            </label>
+            <div>
+                <button type="submit">Generate Array</button>
+                <button type="button" id="restart">Restart</button>
+            </div>
+        </form>
+        <script type="module" src="controller.js"></script>
+    </body>
+</html>
