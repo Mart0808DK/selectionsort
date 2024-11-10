@@ -1,3 +1,4 @@
+import * as controller from "./controller.js";
 export function displayPillars(arr) {
     const container = document.querySelector("#container");
     container.innerHTML = "";
@@ -37,4 +38,10 @@ export function highlightMinPillar(index) {
             pillar.classList.remove("min_pillar");
         }
     });
+}
+
+export function eventListners() {
+    document.querySelector("form").addEventListener("submit", controller.submitInput);
+    document.querySelector("#sortButton").addEventListener("click", controller.startSort);
+    document.querySelector("#restart").addEventListener("click", controller.RestartRun);
 }

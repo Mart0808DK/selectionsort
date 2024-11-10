@@ -3,40 +3,53 @@ addEventListener("load", main);
 let startingArray = [3, 5, 1, 2, 4, 6, 7, 8, 9, 10];
 let arr;
 let ARR_LEN = 10;
-let TickRate = 100;
+let TickRate = 300;
 let restart = false;
 let interations = 0;
+let currentPillar = 0;
+let minPillar = 0;
 
 function main() {
-    eventListners();
+    view.eventListners();
+    view.displayPillars(startingArray);
+    arr = makeArr(ARR_LEN);
     startSort();
 }
 
-function startSort() {
+export function startSort() {
     interations = 0;
     restart = false;
-    view.displayPillars(startingArray);
-    selectionSort(startingArray);
-
-}
-
-function eventListners() {
-    document.querySelector("form").addEventListener("submit", submitInput);
+    view.displayPillars(arr);
+    selectionSort(arr);
+    console.log(arr);
 }
 
 function selectionSort(arr) {
-    for (let i = 0; i < arr.length; i++) {
-        let min = i;
-        view.highlightCurrentPillar(min);
-        for (let j = i + 1; j < arr.length; j++) {
-            if (arr[j] < arr[min]) {
-                min = j;
-                
-            }
-        }
-        swap(i, min, arr);
-    }
+    minPillar = currentPillar;
+    view.highlightCurrentPillar(minPillar);
+    steps(currentPillar, minPillar);
+    
+    swap(currentPillar, minPillar, arr);
+    currentPillar++;
+
     return arr;
+}
+
+function steps(j, min) {
+    if (arr[j] < arr[min]) {
+        minPillar = j;
+        view.highlightMinPillar(min);
+    }
+    
+    if (currentPillar >= arr.length) {
+        return;
+    
+    } else {
+        setTimeout(() => {
+            steps(++currentPillar, min);
+        }, TickRate);
+    }
+    
 }
 
 function swap(i, j, arr) {
@@ -46,20 +59,21 @@ function swap(i, j, arr) {
 }
 
 function makeArr(length) {
+    currentPillar = 0;
     let arr = [];
     for (let i = 0; i < length; i++) {
         arr.push(Math.floor(Math.random() * length));
     }
-    return view.displayPillars(arr);
+    view.displayPillars(arr);
+    return arr;
 }
 
-function RestartRun() {
+export function RestartRun() {
     restart = true;
-
     setTimeout(startSort, TickRate);
 }
 
-function submitInput(e) {
+export function submitInput(e) {
     e.preventDefault();
 
     const arr_length = !isNaN(Number(e.target.arr_length.value)) ? Number(e.target.arr_length.value) : ARR_LEN;
@@ -70,6 +84,4 @@ function submitInput(e) {
     //TickRate = tick_rate > 0 ? tick_rate : TickRate;
 
     arr = makeArr(ARR_LEN);
-    console.log(arr);
-    
 }
