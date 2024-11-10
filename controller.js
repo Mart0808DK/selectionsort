@@ -5,7 +5,7 @@ let arr;
 let ARR_LEN = 10;
 let TickRate = 50;
 let restart = false;
-let interations = 0;
+let iterations = 0;
 let currentPillar = 0;
 let minPillar;
 let start = false;
@@ -19,7 +19,7 @@ function main() {
 }
 
 export function startSort() {
-    interations = 0;
+    iterations = 0;
     if (restart) {
         arr = makeArr(ARR_LEN);
         restart = false;
@@ -59,7 +59,8 @@ function steps(j) {
     console.log(j, arr[minPillar]);
     view.highlightMinPillar(minPillar);
     view.highlightCurrentPillar(j);
-    
+    iterations++;
+    view.displayIterations(iterations);
     if (arr[j] < arr[minPillar]) {
         minPillar = j;
         console.log(`found new min ${arr[minPillar]}, from j ${arr[j]} and min ${arr[minPillar]}` );
@@ -79,13 +80,11 @@ function steps(j) {
 }
 
 function swap(i, j, arr) {
-    console.log(`swapping ${arr[i]} and ${arr[j]}`);
-    console.log(i, j);
-    
-    
     const tmp = arr[i];
     arr[i] = arr[j];
     arr[j] = tmp;
+
+    view.displayPillars(arr);
 }
 
 function makeArr(length) {
@@ -100,7 +99,7 @@ function makeArr(length) {
 
 export function RestartRun() {
     restart = true;
-    setTimeout(startSort, TickRate);
+    startSort();
 }
 
 export function submitInput(e) {
