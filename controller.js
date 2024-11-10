@@ -7,13 +7,12 @@ let TickRate = 300;
 let restart = false;
 let interations = 0;
 let currentPillar = 0;
-let minPillar = 0;
+let minPillar;
 
 function main() {
     view.eventListners();
     view.displayPillars(startingArray);
     arr = makeArr(ARR_LEN);
-    startSort();
 }
 
 export function startSort() {
@@ -29,30 +28,46 @@ function selectionSort(arr) {
     view.highlightCurrentPillar(minPillar);
     steps(currentPillar, minPillar);
     
-    swap(currentPillar, minPillar, arr);
-    currentPillar++;
+}
 
+function swapPillars() {
+    swap(currentPillar, minPillar, arr);
+    console.log(arr);
+    
+    currentPillar++;
+    view.displayPillars(arr);
+    
     return arr;
 }
 
-function steps(j, min) {
-    if (arr[j] < arr[min]) {
+function steps(j) {
+    console.log(j, arr[minPillar]);
+    view.highlightMinPillar(minPillar);
+    view.highlightCurrentPillar(j);
+    
+    if (arr[j] < arr[minPillar]) {
         minPillar = j;
-        view.highlightMinPillar(min);
+        console.log(`found new min ${arr[minPillar]}, from j ${arr[j]} and min ${arr[minPillar]}` );
+        
     }
     
-    if (currentPillar >= arr.length) {
+    if (j >= arr.length) {
+        swapPillars();
         return;
     
     } else {
         setTimeout(() => {
-            steps(++currentPillar, min);
+            steps(++j);
         }, TickRate);
     }
     
 }
 
 function swap(i, j, arr) {
+    console.log(`swapping ${arr[i]} and ${arr[j]}`);
+    console.log(i, j);
+    
+    
     const tmp = arr[i];
     arr[i] = arr[j];
     arr[j] = tmp;
