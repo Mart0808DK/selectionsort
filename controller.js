@@ -3,24 +3,32 @@ addEventListener("load", main);
 let startingArray = [3, 5, 1, 2, 4, 6, 7, 8, 9, 10];
 let arr;
 let ARR_LEN = 10;
-let TickRate = 300;
+let TickRate = 50;
 let restart = false;
 let interations = 0;
 let currentPillar = 0;
 let minPillar;
+let start = false;
+let currentlySorting = false;
 
 function main() {
     view.eventListners();
     view.displayPillars(startingArray);
     arr = makeArr(ARR_LEN);
+    
 }
 
 export function startSort() {
     interations = 0;
-    restart = false;
-    view.displayPillars(arr);
-    selectionSort(arr);
-    console.log(arr);
+    if (restart) {
+        arr = makeArr(ARR_LEN);
+        restart = false;
+    }
+    start = !start;
+    if (start) {
+        selectionSort(arr);
+    }
+    view.flipSortButton(start);
 }
 
 function selectionSort(arr) {
@@ -35,8 +43,15 @@ function swapPillars() {
     console.log(arr);
     
     currentPillar++;
+    currentlySorting = false;
     view.displayPillars(arr);
-    
+    if (currentPillar >= arr.length) {
+        start = false;
+        restart = true;
+        view.flipSortButton(start);
+        return;
+    }
+    if (start) selectionSort(arr);
     return arr;
 }
 

@@ -40,6 +40,11 @@ export function highlightMinPillar(index) {
     });
 }
 
+export function flipSortButton(start) {
+    const button = document.querySelector("#sortButton");
+    button.textContent = start ? "Stop" : "Start";
+}
+
 export function eventListners() {
     document.querySelector("form").addEventListener("submit", controller.submitInput);
     document.querySelector("#sortButton").addEventListener("click", controller.startSort);
