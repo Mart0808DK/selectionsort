@@ -19,13 +19,13 @@ function main() {
 
 export async function startSort() {
     iterations = 0;
-    if (restart) {
-        arr = makeArr(ARR_LEN);
-        restart = false;
-    }
+    restart = false;
     start = !start;
     if (start) {
         await selectionSort();
+        if (restart) {
+            restartSort();
+        }
     }
     view.flipSortButton(start);
 }
@@ -40,7 +40,6 @@ async function swapPillars() {
     await swap(currentPillar, minPillar, arr);
 
     currentPillar++;
-    currentlySorting = false;
     view.displayPillars(arr);
     if (currentPillar >= arr.length) {
         start = false;
@@ -49,6 +48,9 @@ async function swapPillars() {
         return;
     }
     if (start) selectionSort(arr);
+    if (restart) {
+        restartSort();
+    }
     return arr;
 }
 
@@ -60,7 +62,7 @@ async function steps(j) {
     if (arr[j] < arr[minPillar]) {
         minPillar = j;
     }
-
+    
     if (j >= arr.length) {
         await swapPillars();
         return;
@@ -93,7 +95,16 @@ function makeArr(length) {
 
 export function RestartRun() {
     restart = true;
-    startSort();
+    restartSort();
+}
+
+function restartSort() {
+    iterations = 0;
+    currentPillar = 0;
+    minPillar = 0;
+    start = false;
+    arr = makeArr(ARR_LEN);
+    view.flipSortButton(start);
 }
 
 export function submitInput(e) {
