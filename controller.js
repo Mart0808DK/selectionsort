@@ -15,10 +15,9 @@ function main() {
     view.eventListners();
     view.displayPillars(startingArray);
     arr = makeArr(ARR_LEN);
-    
 }
 
-export function startSort() {
+export async function startSort() {
     iterations = 0;
     if (restart) {
         arr = makeArr(ARR_LEN);
@@ -26,22 +25,20 @@ export function startSort() {
     }
     start = !start;
     if (start) {
-        selectionSort(arr);
+        await selectionSort();
     }
     view.flipSortButton(start);
 }
 
-function selectionSort(arr) {
+async function selectionSort() {
     minPillar = currentPillar;
     view.highlightCurrentPillar(minPillar);
-    steps(currentPillar, minPillar);
-    
+    await steps(currentPillar, minPillar);
 }
 
-function swapPillars() {
-    swap(currentPillar, minPillar, arr);
-    console.log(arr);
-    
+async function swapPillars() {
+    await swap(currentPillar, minPillar, arr);
+
     currentPillar++;
     currentlySorting = false;
     view.displayPillars(arr);
@@ -55,36 +52,34 @@ function swapPillars() {
     return arr;
 }
 
-function steps(j) {
-    console.log(j, arr[minPillar]);
+async function steps(j) {
     view.highlightMinPillar(minPillar);
     view.highlightCurrentPillar(j);
     iterations++;
     view.displayIterations(iterations);
     if (arr[j] < arr[minPillar]) {
         minPillar = j;
-        console.log(`found new min ${arr[minPillar]}, from j ${arr[j]} and min ${arr[minPillar]}` );
-        
     }
-    
+
     if (j >= arr.length) {
-        swapPillars();
+        await swapPillars();
         return;
-    
     } else {
         setTimeout(() => {
             steps(++j);
         }, TickRate);
     }
-    
 }
 
-function swap(i, j, arr) {
+async function swap(i, j, arr) {
     const tmp = arr[i];
     arr[i] = arr[j];
     arr[j] = tmp;
 
+    view.animateSwapTo(i, j);
     view.displayPillars(arr);
+    view.animateSwapTo(i, j);
+    await view.customDelay(1000);
 }
 
 function makeArr(length) {
@@ -107,10 +102,10 @@ export function submitInput(e) {
 
     const arr_length = !isNaN(Number(e.target.arr_length.value)) ? Number(e.target.arr_length.value) : ARR_LEN;
 
-    //const tick_rate = !isNaN(Number(e.target.tick_rate.value)) ? Number(e.target.tick_rate.value) : TickRate;
+    const tick_rate = !isNaN(Number(e.target.tick_rate.value)) ? Number(e.target.tick_rate.value) : TickRate;
 
     ARR_LEN = arr_length > 0 ? arr_length : ARR_LEN;
-    //TickRate = tick_rate > 0 ? tick_rate : TickRate;
+    TickRate = tick_rate > 0 ? tick_rate : TickRate;
 
     arr = makeArr(ARR_LEN);
 }
