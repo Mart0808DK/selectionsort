@@ -72,14 +72,13 @@ async function steps(j) {
 }
 
 async function swap(i, j, arr) {
+    await view.animateSwapTo(i, j);
     const tmp = arr[i];
     arr[i] = arr[j];
     arr[j] = tmp;
 
     view.animateSwapTo(i, j);
     view.displayPillars(arr);
-    view.animateSwapTo(i, j);
-    await view.customDelay(1000);
 }
 
 function makeArr(length) {
