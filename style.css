@@ -15,6 +15,7 @@ body {
 }
 
 #container {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center; 
@@ -49,13 +50,11 @@ body {
 .pillar {
     position: absolute;
     display: flex;
-    width: 5px;
     background-color: #333;
     color: #fff;
     padding: 20px;
     justify-content: center;
     align-items: center;
-    transition: left 0.5s ease;
 }
 /* .pillar {
     display: flex;

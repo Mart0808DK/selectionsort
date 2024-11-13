@@ -6,13 +6,19 @@ export function displayPillars(arr) {
     const container = document.querySelector("#container");
     container.innerHTML = "";
     const containerWidth = container.clientWidth;
+    const pillarWidth = 5;
+    const gap = 15
+    const totalPillarsWidth = arr.length * (pillarWidth * gap);
+    const startX = (containerWidth - totalPillarsWidth) / 2;
     
     arr.forEach((element, index) => {
         const pillar = document.createElement("div");
         pillar.classList.add("pillar");
         pillar.id = `pillar${index}`;
         pillar.style.height = `${element * 50}px`;
-        pillar.style.left = `${index * 75 + 25}px`;
+        pillar.style.width = `${pillarWidth}px`;
+        pillar.style.left = `${startX + index * (pillarWidth * gap)}px`;
+        pillar.style.gap = "10px";
 
         const textNode = document.createTextNode(element);
         pillar.appendChild(textNode);
