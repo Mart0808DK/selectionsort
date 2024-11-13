@@ -11,7 +11,7 @@ export function displayPillars(arr) {
         const pillar = document.createElement("div");
         pillar.classList.add("pillar");
         pillar.id = `pillar${index}`;
-        pillar.style.height = `${element * 50}px`;
+        pillar.style.height = `${element * 30}px`;
         pillar.style.left = `${index * 75 + 25}px`;
 
         const textNode = document.createTextNode(element);
