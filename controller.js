@@ -9,7 +9,6 @@ let iterations = 0;
 let currentPillar = 0;
 let minPillar;
 let start = false;
-let currentlySorting = false;
 
 function main() {
     view.eventListners();
@@ -33,7 +32,7 @@ export async function startSort() {
 async function selectionSort() {
     minPillar = currentPillar;
     view.highlightCurrentPillar(minPillar);
-    await steps(currentPillar, minPillar);
+    await steps(currentPillar);
 }
 
 async function swapPillars() {
@@ -54,21 +53,21 @@ async function swapPillars() {
     return arr;
 }
 
-async function steps(j) {
+async function steps(pillar) {
     view.highlightMinPillar(minPillar);
-    view.highlightCurrentPillar(j);
+    view.highlightCurrentPillar(pillar);
     iterations++;
     view.displayIterations(iterations);
-    if (arr[j] < arr[minPillar]) {
-        minPillar = j;
+    if (arr[pillar] < arr[minPillar]) {
+        minPillar = pillar;
     }
     
-    if (j >= arr.length) {
+    if (pillar >= arr.length) {
         await swapPillars();
         return;
     } else {
         setTimeout(() => {
-            steps(++j);
+            steps(++pillar);
         }, TickRate);
     }
 }
